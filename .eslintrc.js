@@ -12,7 +12,8 @@ module.exports = {
   'extends': [
     'airbnb-base',
     'plugin:jasmine/recommended',
-    'plugin:jasmine-jquery/recommended'
+    'plugin:jasmine-jquery/recommended',
+    "plugin:sonarjs/recommended"
   ],
   'parserOptions': {
     'ecmaVersion': 8,
@@ -21,7 +22,8 @@ module.exports = {
   'plugins': [
     'jasmine',
     'jasmine-jquery',
-    'compat'
+    'compat',
+    "sonarjs"
   ],
   'env': {
     'browser': true,

@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="six columns">
+    <button id="test-button" class="btn-actions" data-init="false">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-more"></use>
+      </svg>
+      <span class="audible">More Actions</span>
+    </button>
+    <ul class="popupmenu"></ul>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <button id="reload" class="btn-secondary">
+      <span>Reload Menu Items</span>
+    </button>
+  </div>
+</div>
+
+<script id="test-script">
+  var addStuff = false;
+  var moreActionsBtn = $('#test-button');
+  var RESPONSE_HTML = '' +
+    '<li class="is-disabled">' +
+      '<a href="#">' +
+        '<svg class="icon" focusable="false" aria-hidden="true" role="presenation"><use xlink:href="#icon-folder"></use></svg>' +
+        'Open' +
+      '</a>' +
+    '</li>' +
+    '<li class="submenu">' +
+      '<a href="#">Options</a>' +
+      '<ul class="popupmenu"></ul>' +
+    '</li>' +
+    '<li class="submenu is-disabled">' +
+      '<a href="#">Drill Around®</a>' +
+      '<ul class="popupmenu"></ul>' +
+    '</li>' +
+  '';
+
+  var RESPONSE_SUBMENU_HTML = '' +
+    '<li><a href="#">Item One</a></li>' +
+    '<li><a href="#">Item Two</a></li>' +
+    '<li><a href="#">Item Three</a></li>';
+
+  function moreActionsBeforeOpen(response, options) {
+    if (options.contextElement) {
+      response(RESPONSE_SUBMENU_HTML);
+      return;
+    }
+
+    var responseHTML = RESPONSE_HTML;
+    if (addStuff) {
+      responseHTML += '<li><a href="#">Added Thing</a></li>';
+    }
+    response(responseHTML);
+  }
+
+  moreActionsBtn.popupmenu({
+    beforeOpen: moreActionsBeforeOpen
+  });
+
+  $('body').on('initialized', function () {
+    $('#reload').on('click.test', function () {
+      addStuff = true;
+      moreActionsBtn.data('popupmenu').updated();
+    });
+  });
+</script>

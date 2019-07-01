@@ -1,0 +1,40 @@
+{
+  "custom": true,
+  "listId": "my-menu-id",
+  "menu": [
+    {
+      "icon": "folder",
+      "disabled": true,
+      "text": "Open"
+    },
+    {
+      "text": "Options",
+      "submenu": [
+        {
+          "text": "Submenu Item #1"
+        },
+        {
+          "text": "Submenu Item #2"
+        },
+        {
+          "text": "Submenu Item #3"
+        }
+      ]
+    },
+    {
+      "text": "Drill Around®",
+      "disabled": true,
+      "submenu": [
+        {
+          "text": "Submenu Item #1"
+        },
+        {
+          "text": "Submenu Item #2"
+        },
+        {
+          "text": "Submenu Item #3"
+        }
+      ]
+    }
+  ]
+}

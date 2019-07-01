@@ -18,9 +18,31 @@
   </div>
 </div>
 
+<div class="row top-padding">
+  <div class="six columns">
+    <fieldset class="radio-group">
+      <input id="dont-remove" name="removal" type="radio" class="radio" value="0" checked/>
+      <label class="radio-label" for="dont-remove">Don't remove any markup</label>
+      <br />
+      <input id="remove-ul" name="removal" type="radio" class="radio" value="1"/>
+      <label class="radio-label" for="remove-ul">Remove the &lt;ul&gt;</label>
+      <br />
+      <input id="remove-div" name="removal" type="radio" class="radio" value="2"/>
+      <label class="radio-label" for="remove-div">Remove the &lt;div&gt;</label>
+    </fieldset>
+  </div>
+</div>
+
 <script id="test-script">
   var addStuff = false;
   var moreActionsBtn = $('#test-button');
+  var removalRadios = $('[name="removal"]');
+  var removalSelectors = [
+    '',
+    '#popupmenu-1 > li:nth-child(2) > div',
+    '#popupmenu-1 > li:nth-child(2) > div > ul'
+  ];
+
   var RESPONSE_HTML = '' +
     '<li class="is-disabled">' +
       '<a href="#">' +
@@ -61,8 +83,22 @@
   });
 
   $('body').on('initialized', function () {
+
+    removalRadios.on('click.test', function () {
+      removalRadios.prop('checked', false);
+      $(this).prop('checked', true);
+    });
+
+    // Simulate Angular's V-DOM removing some elements
     $('#reload').on('click.test', function () {
       addStuff = true;
+
+      // If we want to remove markup, choose the selector here
+      var removalRadiosValue = Number(removalRadios.filter(':checked').val());
+      if (removalRadiosValue > 0) {
+        $(removalSelectors[removalRadiosValue]).remove();
+      }
+
       moreActionsBtn.data('popupmenu').updated();
     });
   });

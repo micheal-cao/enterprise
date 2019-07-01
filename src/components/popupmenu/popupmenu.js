@@ -592,14 +592,19 @@ PopupMenu.prototype = {
         }
 
         // menu items that contain submenus
-        if (submenu instanceof HTMLElement) {
-          submenu.classList.add('popupmenu');
-        }
         if (submenuWrapper instanceof HTMLElement) {
           li.className += `${DOM.classNameExists(li) ? ' ' : ''}submenu`;
-          submenu = $(submenuWrapper).children('ul')[0];
+          if (!submenu) {
+            submenu = $('<ul class="popupmenu"></ul>')[0];
+            $(submenu).appendTo($(submenuWrapper));
+          }
+        }
+
+        if (submenu instanceof HTMLElement) {
+          li.className += `${DOM.classNameExists(li) ? ' ' : ''}submenu`;
           submenu.classList.add('popupmenu');
         }
+
         if (DOM.hasClass(li, 'submenu')) {
           // Add a span
           if (!span) {
@@ -611,8 +616,6 @@ PopupMenu.prototype = {
             $a.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
           }
           a.setAttribute('aria-haspopup', 'true');
-
-          // Check for existing menus, and if present, apply a `.popupmenu` class automatically.
         }
 
         // is-checked
